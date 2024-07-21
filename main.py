@@ -235,7 +235,9 @@ while True:
             if coin.rect.top >= HEIGHT:
                 coin.kill()
 
-    plat_gen()
+    if len(platforms) < 7:
+        plat_gen()
+
     P1.update()
 
     for entity in all_sprites:
