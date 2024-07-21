@@ -2,6 +2,8 @@ import pygame
 
 
 class Coin(pygame.sprite.Sprite):
+    """ Collectibles for the player to collect, increases score by 10 upon collection. Currently, these look like
+    glasses of milk. """
     def __init__(self, pos):
         super().__init__()
 

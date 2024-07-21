@@ -13,7 +13,7 @@ vec = pygame.math.Vector2  # 2 for two-dimensional
 
 FramePerSec = pygame.time.Clock()
 
-displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
+display_surface = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Game")
 background_image = pygame.image.load("data/background.png")
 background = pygame.transform.scale(background_image, (WIDTH, HEIGHT))
@@ -27,30 +27,30 @@ def check_score():
             p.point = False
 
 
-def plat_gen():
-    while len(platforms) < 7 :
+def generate_platforms():
+    while len(platforms) < 7:
         width = random.randrange(50,100)
-        C = True
+        platforms_overlap = True
 
-        while C:
-            p = Platform()
-            p.rect.center = (random.randrange(0, WIDTH - width),
+        while platforms_overlap:
+            new_platforms = Platform()
+            new_platforms.rect.center = (random.randrange(0, WIDTH - width),
                              random.randrange(-50, 0))
-            C = check(p, platforms)
+            platforms_overlap = check_platform_overlap(new_platforms, platforms)
 
-        p.generate_coin(coins)
-        platforms.add(p)
-        all_sprites.add(p)
+        new_platforms.generate_coin(coins)
+        platforms.add(new_platforms)
+        all_sprites.add(new_platforms)
 
 
-def check(platform, groupies):
-    if pygame.sprite.spritecollideany(platform, groupies):
+def check_platform_overlap(new_platform, all_platforms):
+    if pygame.sprite.spritecollideany(new_platform, all_platforms):
         return True
     else:
-        for entity in groupies:
-            if entity == platform:
+        for p in all_platforms:
+            if p == new_platform:
                 continue
-            if (abs(platform.rect.top - entity.rect.bottom) < 10) or (abs(platform.rect.bottom - entity.rect.top) < 10):
+            if (abs(new_platform.rect.top - p.rect.bottom) < 10) or (abs(new_platform.rect.bottom - p.rect.top) < 10):
                 return True
         return False
 
@@ -79,7 +79,7 @@ for x in range(random.randint(5, 6)):
     pl = Platform()
     while C:
         pl = Platform()
-        C = check(pl, platforms)
+        C = check_platform_overlap(pl, platforms)
 
     pl.generate_coin(coins)
     platforms.add(pl)
@@ -87,31 +87,31 @@ for x in range(random.randint(5, 6)):
 
 while True:
     for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                player.jump()
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_SPACE:
                 player.cancel_jump()
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                player.jump()
 
     if player.rect.top > HEIGHT:
         for entity in all_sprites:
             entity.kill()
         time.sleep(1)
-        displaysurface.fill((255, 0, 0))
+        display_surface.fill((255, 0, 0))
         pygame.display.update()
         time.sleep(1)
         pygame.quit()
         sys.exit()
 
-    displaysurface.blit(background, (0, 0))
+    display_surface.blit(background, (0, 0))
     f = pygame.font.SysFont("Verdana", 20)
     g = f.render("Score:" + str(round(player.score)), True, (123, 255, 0))
     text_rect = g.get_rect(center=(WIDTH / 2, 20))
-    displaysurface.blit(g, text_rect)
+    display_surface.blit(g, text_rect)
 
     if player.rect.top <= HEIGHT / 3:
         player.pos.y += abs(player.vel.y)
@@ -125,19 +125,19 @@ while True:
                 coin.kill()
 
     if len(platforms) < 7:
-        plat_gen()
+        generate_platforms()
 
     player.update(platforms=platforms)
     player.move()
 
     for entity in all_sprites:
-        displaysurface.blit(entity.surf, entity.rect)
+        display_surface.blit(entity.surf, entity.rect)
 
     for plat in platforms:
         plat.move(player)
 
     for coin in coins:
-        displaysurface.blit(coin.image, coin.rect)
+        display_surface.blit(coin.image, coin.rect)
         coin.update(player)
 
     check_score()

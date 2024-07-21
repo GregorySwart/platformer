@@ -7,6 +7,7 @@ vec = pygame.math.Vector2
 
 
 class Player(pygame.sprite.Sprite):
+    """ Class for the player """
     def __init__(self):
         super().__init__()
         self.surf = pygame.image.load("data/character.png")
@@ -61,7 +62,7 @@ class Player(pygame.sprite.Sprite):
     def jump(self):
         if self.touching_platform and not self.jumping:
             self.jumping = True
-            self.vel.y = -17
+            self.vel.y = -15
 
     def cancel_jump(self):
         if self.jumping:

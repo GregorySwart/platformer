@@ -8,7 +8,10 @@ from coin import Coin
 
 
 class Platform(pygame.sprite.Sprite):
-    def __init__(self, width = 0, height = 18):
+    """ Class for the platforms on which the player moves. Each platform has an equal 33% chance to be stationary, move
+    to the left, or move to the right. Stationary platforms have a 1 in 6 chance to generate with a coin. """
+
+    def __init__(self, width: int = 0, height: int = 18):
         super().__init__()
 
         if width == 0:
@@ -18,8 +21,8 @@ class Platform(pygame.sprite.Sprite):
         self.surf = pygame.transform.scale(self.image, (width, height))
         self.rect = self.surf.get_rect(center=(random.randint(0, WIDTH - 10),
                                                random.randint(0, HEIGHT - 30)))
-        self.point = True
-        self.speed = random.randint(-1, 1)
+        self.point = True  # When the player passes each platform this is set to False and 0.1 is added to score
+        self.speed = random.randint(-1, 1)  # -1 Moves to the left, 0 is stationary. 1 moves to the right
         self.moving = True
 
     def move(self, player):
