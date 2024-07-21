@@ -40,11 +40,16 @@ class Player(pygame.sprite.Sprite):
         pressed_keys = pygame.key.get_pressed()
 
         if pressed_keys[K_LEFT]:
-            self.acc.x = -ACC
+            self.acc.x += -ACC
         if pressed_keys[K_RIGHT]:
-            self.acc.x = ACC
+            self.acc.x += ACC
 
-        self.acc.x += self.vel.x * FRIC
+        hits = pygame.sprite.spritecollide(self, platforms, False)
+        if not pressed_keys[K_LEFT] and not pressed_keys[K_RIGHT] and hits:
+            self.acc.x += self.vel.x * FRIC * 2  # Make player slide around less on platforms
+        else:
+            self.acc.x += self.vel.x * FRIC
+
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
 
@@ -193,9 +198,6 @@ for x in range(random.randint(5, 6)):
 
 while True:
     for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                P1.jump()
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_SPACE:
                 P1.cancel_jump()
@@ -215,8 +217,6 @@ while True:
         time.sleep(1)
         pygame.quit()
         sys.exit()
-
-    # displaysurface.fill((0, 0, 0))0
 
     displaysurface.blit(background, (0, 0))
     f = pygame.font.SysFont("Verdana", 20)
