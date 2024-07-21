@@ -18,14 +18,14 @@ FramePerSec = pygame.time.Clock()
 
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Game")
-background_image = pygame.image.load("background.png")
+background_image = pygame.image.load("data/background.png")
 background = pygame.transform.scale(background_image, (WIDTH, HEIGHT))
 
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load("character.png")
+        self.surf = pygame.image.load("data/character.png")
         self.rect = self.surf.get_rect(center=(10, 420))
 
         self.pos = vec((10, 385))
@@ -85,7 +85,7 @@ class platform(pygame.sprite.Sprite):
 
         if width == 0: width = random.randint(50, 120)
 
-        self.image = pygame.image.load("platform.png")
+        self.image = pygame.image.load("data/platform.png")
         self.surf = pygame.transform.scale(self.image, (width, height))
         self.rect = self.surf.get_rect(center = (random.randint(0, WIDTH-10),
                                                  random.randint(0, HEIGHT-30)))
@@ -114,7 +114,7 @@ class Coin(pygame.sprite.Sprite):
     def __init__(self, pos):
         super().__init__()
 
-        self.image = pygame.image.load("milk.png").convert_alpha()
+        self.image = pygame.image.load("data/milk.png").convert_alpha()
         self.rect = self.image.get_rect()
 
         self.rect.topleft = pos
@@ -216,7 +216,7 @@ while True:
         pygame.quit()
         sys.exit()
 
-    displaysurface.fill((0, 0, 0))
+    # displaysurface.fill((0, 0, 0))0
 
     displaysurface.blit(background, (0, 0))
     f = pygame.font.SysFont("Verdana", 20)
