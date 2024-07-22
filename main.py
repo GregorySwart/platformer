@@ -96,7 +96,8 @@ while True:
     if frame % 100 == 0:
         pass
 
-    for event in pygame.event.get():
+    events = pygame.event.get()
+    for event in events:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 player.jump()
@@ -135,11 +136,11 @@ while True:
                 coin.kill()
 
     if len(platforms) < 7:
-        difficulty = min(round(player.score / 10), 100)  # Difficulty scales 0 - 100
+        difficulty = min(round(player.score/10), 100)  # Difficulty scales 0 - 100
         generate_platforms(difficulty=difficulty, other_platforms=platforms)
 
     player.update(platforms=platforms)
-    player.move()
+    player.move(events)
 
     for entity in all_sprites:
         display_surface.blit(entity.surf, entity.rect)

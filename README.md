@@ -21,15 +21,17 @@ TODO:
 - [ ] Add a start menu and exit screen
   - [ ] Add option to choose character (i.e. have a different picture)
 - [ ] Disallow the player to jump up through the bottom of platforms, making the game much harder (?)
-- [ ] Add a double jump (?)
+- [x] Add a double jump (?)
 - [ ] Add some way of spending accumulated score/money
 - [ ] Make the game harder as score increases
-  - [ ] Make platforms smaller as score increases
+  - [x] Make platforms smaller as score increases
   - [ ] Make platforms move faster as score increases
+- [ ] Fix player/platform collision detection
 
 BUGS:
 - [x] If platform threshold is set to 10, occasionally there will be a gap between platforms too big to jump. Setting 
 it to 20 solves this but makes the game freeze sometimes due to there not being any suitable positions for platforms - 
 Fixed by redoing platform generation logic. Instead of always spawning new platforms at y=0 (the top of the screen), we 
 now generate them some random distance above the current highest platform. This also eliminates occasional lag from 
-trying to generate the same platform many times until finding a suitable spot    
+trying to generate the same platform many times until finding a suitable spot
+- [ ] Double jumps are not always picked up

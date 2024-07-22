@@ -1,5 +1,5 @@
 import pygame
-from pygame.locals import K_LEFT, K_RIGHT
+from pygame.locals import K_LEFT, K_RIGHT, K_LSHIFT, K_SPACE
 
 from constants import WIDTH, ACC, FRIC
 
@@ -20,7 +20,10 @@ class Player(pygame.sprite.Sprite):
         self.score = 0
         self.touching_platform = False
 
-    def move(self):
+        self.already_strafed = False
+        self.already_double_jumped = False
+
+    def move(self, events):
         self.acc = vec(0, 0.5)
 
         pressed_keys = pygame.key.get_pressed()
@@ -45,6 +48,30 @@ class Player(pygame.sprite.Sprite):
 
         self.rect.midbottom = self.pos
 
+        # Strafing
+        for e in events:
+            if e.type == pygame.KEYDOWN and e.key == K_LSHIFT:
+                if not pressed_keys[K_SPACE] or self.vel.y > -8:  # This -8 figure could be further tweaked
+                    if not self.touching_platform and not self.already_strafed:
+                        if pressed_keys[K_LEFT]:
+                            self.vel.x -= 9
+                            self.vel.y -= 4
+                        elif pressed_keys[K_RIGHT]:
+                            self.vel.x += 9
+                            self.vel.y -= 4
+                        self.already_strafed = True
+
+        # Double jump
+        if not self.touching_platform:
+            for event in events:
+                if event.type == pygame.KEYDOWN and event.key == K_SPACE and not self.already_double_jumped:
+                    self.vel.y -= 10
+                    self.already_double_jumped = True
+
+        if self.touching_platform and self.vel.y == 0.5:  # y velocity seems to be 0.5 when resting on a platform
+            self.already_strafed = False
+            self.already_double_jumped = False
+
     def update(self, platforms):
         hits = pygame.sprite.spritecollide(self, platforms, False)
         self.touching_platform = True if hits else False
@@ -68,3 +95,11 @@ class Player(pygame.sprite.Sprite):
         if self.jumping:
             if self.vel.y < -3:
                 self.vel.y = -3
+
+    # def strafe(self, left=True):
+    #     if self.prep_strafe_left:
+    #         self.prep_strafe_left = False
+    #         self.vel.x -= 10
+    #     else:
+    #         self.prep_strafe_right = False
+    #         self.vel.x += 10

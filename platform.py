@@ -26,7 +26,7 @@ class Platform(pygame.sprite.Sprite):
         self.surf = pygame.transform.scale(self.image, (width, height))
         self.rect = self.surf.get_rect(center=(random.randint(0, WIDTH - 10), height_coordinate))
         self.point = True  # When the player passes each platform this is set to False and 0.1 is added to score
-        self.speed = random.randint(-1, 1)  # -1 Moves to the left, 0 is stationary. 1 moves to the right
+        self.speed = random.randint(-1, 1)  # -1 Moves to the left, 0 is stationary, 1 moves to the right
         self.moving = True
 
     def move(self, player):
