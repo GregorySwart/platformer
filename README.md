@@ -24,3 +24,12 @@ TODO:
 - [ ] Add a double jump (?)
 - [ ] Add some way of spending accumulated score/money
 - [ ] Make the game harder as score increases
+  - [ ] Make platforms smaller as score increases
+  - [ ] Make platforms move faster as score increases
+
+BUGS:
+- [x] If platform threshold is set to 10, occasionally there will be a gap between platforms too big to jump. Setting 
+it to 20 solves this but makes the game freeze sometimes due to there not being any suitable positions for platforms - 
+Fixed by redoing platform generation logic. Instead of always spawning new platforms at y=0 (the top of the screen), we 
+now generate them some random distance above the current highest platform. This also eliminates occasional lag from 
+trying to generate the same platform many times until finding a suitable spot    

@@ -27,20 +27,25 @@ def check_score():
             p.point = False
 
 
-def generate_platforms():
+def generate_platforms(difficulty, other_platforms):
     while len(platforms) < 7:
-        width = random.randrange(50,100)
         platforms_overlap = True
 
+        tries = 0
         while platforms_overlap:
-            new_platforms = Platform()
-            new_platforms.rect.center = (random.randrange(0, WIDTH - width),
-                             random.randrange(-50, 0))
-            platforms_overlap = check_platform_overlap(new_platforms, platforms)
+            prev_height = min([p.rect.top for p in other_platforms])
 
-        new_platforms.generate_coin(coins)
-        platforms.add(new_platforms)
-        all_sprites.add(new_platforms)
+            new_platform = Platform(difficulty=difficulty, prev_height=prev_height)
+            platforms_overlap = check_platform_overlap(new_platform, platforms)
+            if platforms_overlap:
+                tries += 1
+
+            if tries >= 10:
+                break  # Failsafe - allow platforms to overlap after 10 unsuccessful tries
+
+        new_platform.generate_coin(coins)
+        platforms.add(new_platform)
+        all_sprites.add(new_platform)
 
 
 def check_platform_overlap(new_platform, all_platforms):
@@ -50,7 +55,7 @@ def check_platform_overlap(new_platform, all_platforms):
         for p in all_platforms:
             if p == new_platform:
                 continue
-            if (abs(new_platform.rect.top - p.rect.bottom) < 10) or (abs(new_platform.rect.bottom - p.rect.top) < 10):
+            if (abs(new_platform.rect.top - p.rect.bottom) < 20) or (abs(new_platform.rect.bottom - p.rect.top) < 20):
                 return True
         return False
 
@@ -85,7 +90,12 @@ for x in range(random.randint(5, 6)):
     platforms.add(pl)
     all_sprites.add(pl)
 
+frame = 0
 while True:
+    frame += 1
+    if frame % 100 == 0:
+        pass
+
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
@@ -125,7 +135,8 @@ while True:
                 coin.kill()
 
     if len(platforms) < 7:
-        generate_platforms()
+        difficulty = min(round(player.score / 10), 100)  # Difficulty scales 0 - 100
+        generate_platforms(difficulty=difficulty, other_platforms=platforms)
 
     player.update(platforms=platforms)
     player.move()
