@@ -35,3 +35,4 @@ Fixed by redoing platform generation logic. Instead of always spawning new platf
 now generate them some random distance above the current highest platform. This also eliminates occasional lag from 
 trying to generate the same platform many times until finding a suitable spot
 - [ ] Double jumps are not always picked up
+- [ ] Sometimes when double jumping just when landing on a platform the resulting jump is disproportionately large

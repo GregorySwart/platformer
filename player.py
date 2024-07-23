@@ -49,10 +49,10 @@ class Player(pygame.sprite.Sprite):
         self.rect.midbottom = self.pos
 
         # Strafing
-        for e in events:
-            if e.type == pygame.KEYDOWN and e.key == K_LSHIFT:
-                if not pressed_keys[K_SPACE] or self.vel.y > -8:  # This -8 figure could be further tweaked
-                    if not self.touching_platform and not self.already_strafed:
+        if not pressed_keys[K_SPACE] or self.vel.y > -8:  # This -8 figure could be further tweaked
+            for e in events:
+                if not self.touching_platform and not self.already_strafed:
+                    if e.type == pygame.KEYDOWN and e.key == K_LSHIFT:
                         if pressed_keys[K_LEFT]:
                             self.vel.x -= 9
                             self.vel.y -= 4
@@ -60,12 +60,20 @@ class Player(pygame.sprite.Sprite):
                             self.vel.x += 9
                             self.vel.y -= 4
                         self.already_strafed = True
+                    elif e.type == pygame.KEYDOWN and e.key == K_LEFT and pressed_keys[K_LSHIFT]:
+                        self.vel.x -= 9
+                        self.vel.y -= 4
+                        self.already_strafed = True
+                    elif e.type == pygame.KEYDOWN and e.key == K_RIGHT and pressed_keys[K_LSHIFT]:
+                        self.vel.x += 9
+                        self.vel.y -= 4
+                        self.already_strafed = True
 
         # Double jump
         if not self.touching_platform:
             for event in events:
                 if event.type == pygame.KEYDOWN and event.key == K_SPACE and not self.already_double_jumped:
-                    self.vel.y -= 10
+                    self.vel.y -= 10.5
                     self.already_double_jumped = True
 
         if self.touching_platform and self.vel.y == 0.5:  # y velocity seems to be 0.5 when resting on a platform
