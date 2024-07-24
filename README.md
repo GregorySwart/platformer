@@ -22,6 +22,7 @@ TODO:
 - [x] Fix occasional jank when new platforms are generated
 - [ ] Add possibility to jump down from a platform using the down arrow key
 - [x] Make platforms disappear some time after the player lands on them to make the game a bit harder
+  - [ ] Add 1 second to the disappearance timer when the player lands on one
 - [ ] Add a start menu and exit screen
   - [ ] Add option to choose character (i.e. have a different picture)
 - [ ] Disallow the player to jump up through the bottom of platforms
@@ -35,6 +36,8 @@ TODO:
 - [ ] Revamp player/platform collision detection and logic to determine if the player is resting on a platform
 - [ ] Add distinct levels
 - [ ] Add sound effects & music
+- [x] Collectibles now disappear 3 seconds after generation
+  - [ ] Add animation to indicate time until disappearing
 
 BUGS:
 - [x] If platform threshold is set to 10, occasionally there will be a gap between platforms too big to jump. Setting 

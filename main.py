@@ -79,18 +79,6 @@ platforms.add(initial_platform)
 
 coins = pygame.sprite.Group()
 
-# Initial level generation
-for x in range(random.randint(5, 6)):
-    C = True
-    pl = Platform()
-    while C:
-        pl = Platform()
-        C = check_platform_overlap(pl, platforms)
-
-    pl.generate_coin(coins)
-    platforms.add(pl)
-    all_sprites.add(pl)
-
 frame = 0
 while True:
     frame += 1
