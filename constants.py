@@ -3,3 +3,4 @@ WIDTH = 400
 ACC = 0.5
 FRIC = -0.12
 FPS = 60
+DEV_MODE = False

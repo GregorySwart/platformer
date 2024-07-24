@@ -4,7 +4,7 @@ from pygame.locals import *
 import random
 import time
 
-from constants import HEIGHT, WIDTH, FPS
+from constants import HEIGHT, WIDTH, FPS, DEV_MODE
 from platform import Platform
 from player import Player
 
@@ -65,6 +65,7 @@ initial_platform = Platform(width=WIDTH)
 initial_platform.rect = initial_platform.surf.get_rect(center=(WIDTH / 2, HEIGHT - 10))
 initial_platform.moving = False
 initial_platform.point = False
+initial_platform.base_platform = True
 
 # Initialise player
 player = Player()
@@ -127,6 +128,9 @@ while True:
     if player.rect.top <= HEIGHT / 3:
         player.pos.y += abs(player.vel.y)
         for plat in platforms:
+            if DEV_MODE and plat.base_platform:
+                continue
+
             plat.rect.y += abs(player.vel.y)
             if plat.rect.top >= HEIGHT:
                 plat.kill()

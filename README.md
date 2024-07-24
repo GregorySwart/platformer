@@ -24,14 +24,15 @@ TODO:
 - [x] Make platforms disappear some time after the player lands on them to make the game a bit harder
 - [ ] Add a start menu and exit screen
   - [ ] Add option to choose character (i.e. have a different picture)
-- [ ] Disallow the player to jump up through the bottom of platforms, making the game much harder (?)
-- [x] Add a double jump (?)
+- [ ] Disallow the player to jump up through the bottom of platforms
+- [x] Add a double jump (space bar while jumping)
+  - [ ] Tweak double jump vertical velocity boost - make velocity boost proportional to how fast the player is falling 
 - [x] Add side strafing (left shift + arrow keys while in the air)
 - [ ] Add some way of spending accumulated score/money
 - [x] Make the game harder as score increases
   - [x] Make platforms smaller as score increases
   - [ ] Make platforms move faster as score increases
-- [ ] Fix player/platform collision detection
+- [ ] Revamp player/platform collision detection and logic to determine if the player is resting on a platform
 - [ ] Add distinct levels
 - [ ] Add sound effects & music
 

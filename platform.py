@@ -31,6 +31,7 @@ class Platform(pygame.sprite.Sprite):
         self.crumbles = random.randint(1, 100) < min(difficulty, 90)
         self.n_cracks = 0
         self.last_crack_time = None
+        self.base_platform = False
 
     def move(self, player):
         hits = self.rect.colliderect(player.rect)
