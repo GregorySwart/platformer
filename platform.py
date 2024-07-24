@@ -17,7 +17,7 @@ class Platform(pygame.sprite.Sprite):
         if width == 0:
             width = random.randint(50, 120)
 
-        scaling = max(1 - (difficulty / 100), 0.1)
+        scaling = max(1 - (difficulty / 100), 0.2)
         width *= scaling
         height_coordinate = prev_height - random.randint(70, 80 + difficulty) if prev_height\
             else random.randint(0, HEIGHT - 30)
@@ -28,6 +28,9 @@ class Platform(pygame.sprite.Sprite):
         self.point = True  # When the player passes each platform this is set to False and 0.1 is added to score
         self.speed = random.randint(-1, 1)  # -1 Moves to the left, 0 is stationary, 1 moves to the right
         self.moving = True
+        self.crumbles = random.randint(1, 100) < min(difficulty, 90)
+        self.n_cracks = 0
+        self.last_crack_time = None
 
     def move(self, player):
         hits = self.rect.colliderect(player.rect)
@@ -44,3 +47,30 @@ class Platform(pygame.sprite.Sprite):
         dice_roll = randint(1, 6)
         if (self.speed == 0) and dice_roll == 6:
             all_coins.add(Coin((self.rect.centerx, self.rect.centery - 50)))
+
+    def check_crumble(self, player):
+        if not self.crumbles:
+            return None
+
+        hits = self.rect.colliderect(player.rect)
+        now = pygame.time.get_ticks()
+        if hits and player.vel.y == 0.5 and self.n_cracks == 0:
+            self.image = pygame.image.load("data/platform_cracked_1.png")
+            self.surf = pygame.transform.scale(self.image, (self.rect.width, self.rect.height))
+            self.last_crack_time = now
+            self.n_cracks += 1
+
+        if self.n_cracks == 1 and now - self.last_crack_time > 1000:
+            self.image = pygame.image.load("data/platform_cracked_2.png")
+            self.surf = pygame.transform.scale(self.image, (self.rect.width, self.rect.height))
+            self.last_crack_time = now
+            self.n_cracks += 1
+
+        if self.n_cracks == 2 and now - self.last_crack_time > 1000:
+            self.image = pygame.image.load("data/platform_cracked_3.png")
+            self.surf = pygame.transform.scale(self.image, (self.rect.width, self.rect.height))
+            self.last_crack_time = now
+            self.n_cracks += 1
+
+        if self.n_cracks == 3 and now - self.last_crack_time > 1000:
+            self.kill()

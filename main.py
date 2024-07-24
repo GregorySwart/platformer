@@ -136,7 +136,7 @@ while True:
                 coin.kill()
 
     if len(platforms) < 7:
-        difficulty = min(round(player.score/10), 100)  # Difficulty scales 0 - 100
+        difficulty = min(round(player.score/2), 100)  # Difficulty scales 0 - 100
         generate_platforms(difficulty=difficulty, other_platforms=platforms)
 
     player.update(platforms=platforms)
@@ -147,6 +147,7 @@ while True:
 
     for plat in platforms:
         plat.move(player)
+        plat.check_crumble(player)
 
     for coin in coins:
         display_surface.blit(coin.image, coin.rect)

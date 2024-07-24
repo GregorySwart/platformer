@@ -9,6 +9,10 @@ The game is very simple so far:
 * Jump higher to earn a higher score
 * Every 10th platform passed increases score by 1
 * Every glass of milk collected increases score by 10
+* As score increases, the game will become more difficult (up to a score of 200):
+  * Platforms will get smaller and further apart
+  * Some platforms will disappear 3 seconds after the player lands on them. The probability of a platform disappears 
+    increases with score from 0% to 90%
 
 And that's it for now!
 
@@ -17,16 +21,19 @@ And that's it for now!
 TODO:
 - [x] Fix occasional jank when new platforms are generated
 - [ ] Add possibility to jump down from a platform using the down arrow key
-- [ ] Make platforms disappear some time after the player lands on them to make the game a bit harder
+- [x] Make platforms disappear some time after the player lands on them to make the game a bit harder
 - [ ] Add a start menu and exit screen
   - [ ] Add option to choose character (i.e. have a different picture)
 - [ ] Disallow the player to jump up through the bottom of platforms, making the game much harder (?)
 - [x] Add a double jump (?)
+- [x] Add side strafing (left shift + arrow keys while in the air)
 - [ ] Add some way of spending accumulated score/money
-- [ ] Make the game harder as score increases
+- [x] Make the game harder as score increases
   - [x] Make platforms smaller as score increases
   - [ ] Make platforms move faster as score increases
 - [ ] Fix player/platform collision detection
+- [ ] Add distinct levels
+- [ ] Add sound effects & music
 
 BUGS:
 - [x] If platform threshold is set to 10, occasionally there will be a gap between platforms too big to jump. Setting 
