@@ -79,6 +79,11 @@ platforms.add(initial_platform)
 
 coins = pygame.sprite.Group()
 
+pygame.mixer.init()
+pygame.mixer.music.load('music/Stephen Helier - Study in A flat.wav')
+pygame.mixer.music.play(-1)
+pygame.event.wait()
+
 while True:
     events = pygame.event.get()
     for event in events:
