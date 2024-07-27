@@ -32,6 +32,7 @@ class Platform(pygame.sprite.Sprite):
         self.n_cracks = 0
         self.last_crack_time = None
         self.base_platform = False
+        self.coin = None
 
     def move(self, player):
         hits = self.rect.colliderect(player.rect)
@@ -41,13 +42,19 @@ class Platform(pygame.sprite.Sprite):
                 player.pos += (self.speed, 0)
             if self.speed > 0 and self.rect.left > WIDTH:
                 self.rect.right = 0
+                if self.coin:
+                    self.coin.rect.centerx = self.rect.centerx
             if self.speed < 0 and self.rect.right < 0:
                 self.rect.left = WIDTH
+                if self.coin:
+                    self.coin.rect.centerx = self.rect.centerx
 
     def generate_coin(self, all_coins):
         dice_roll = randint(1, 6)
-        if (self.speed == 0) and dice_roll == 6:
-            all_coins.add(Coin((self.rect.centerx, self.rect.centery - 50)))
+        if dice_roll == 6:
+            new_coin = Coin((self.rect.centerx, self.rect.centery - 30), speed=self.speed)
+            all_coins.add(new_coin)
+            self.coin = new_coin
 
     def check_crumble(self, player):
         if not self.crumbles:

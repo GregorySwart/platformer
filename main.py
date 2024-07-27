@@ -79,12 +79,7 @@ platforms.add(initial_platform)
 
 coins = pygame.sprite.Group()
 
-frame = 0
 while True:
-    frame += 1
-    if frame % 100 == 0:
-        pass
-
     events = pygame.event.get()
     for event in events:
         if event.type == pygame.KEYDOWN:
@@ -144,6 +139,7 @@ while True:
     for coin in coins:
         display_surface.blit(coin.image, coin.rect)
         coin.update(player)
+        coin.move()
 
     check_score()
 

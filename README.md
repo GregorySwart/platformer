@@ -37,8 +37,9 @@ TODO:
 - [ ] Add distinct levels
 - [ ] Add sound effects & music
 - [x] Collectibles now disappear 3 seconds after generation
-  - [ ] Add animation to indicate time until disappearing
-
+  - [x] Add animation to indicate time until disappearing
+- [ ] Fix edge-wrapping logic for platforms and the player
+ 
 BUGS:
 - [x] If platform threshold is set to 10, occasionally there will be a gap between platforms too big to jump. Setting 
 it to 20 solves this but makes the game freeze sometimes due to there not being any suitable positions for platforms - 

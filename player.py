@@ -103,11 +103,3 @@ class Player(pygame.sprite.Sprite):
         if self.jumping:
             if self.vel.y < -3:
                 self.vel.y = -3
-
-    # def strafe(self, left=True):
-    #     if self.prep_strafe_left:
-    #         self.prep_strafe_left = False
-    #         self.vel.x -= 10
-    #     else:
-    #         self.prep_strafe_right = False
-    #         self.vel.x += 10
