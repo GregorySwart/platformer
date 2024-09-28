@@ -79,10 +79,10 @@ platforms.add(initial_platform)
 
 coins = pygame.sprite.Group()
 
+music_file = "music/shreksophone.wav"
 pygame.mixer.init()
-pygame.mixer.music.load('music/Stephen Helier - Study in A flat.wav')
-pygame.mixer.music.play(-1)
-pygame.event.wait()
+pygame.mixer.music.load(music_file)
+pygame.mixer.music.play(loops=-1)
 
 while True:
     events = pygame.event.get()
