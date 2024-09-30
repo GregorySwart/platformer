@@ -5,6 +5,12 @@ A very basic platformer game I made using the pygame library and following
 
 ![demo gif](data/gameDemo.gif)
 
+To run:
+```
+pip install -r requirements.txt
+python -m main.py
+```
+
 The game is very simple so far:
 * Jump higher to earn a higher score
 * Every 10th platform passed increases score by 1
